@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Assignment_2
 {
@@ -16,11 +17,26 @@ namespace Assignment_2
             Console.Write(index);
 
             Console.Write("\n");
+            int[] arr2_1 = new int[] { 6, 3, 6, 7, 3};
+            int [] arr2_2 = { 3, 6, 2 };
+            Console.Write("----------Question 2 - Common Elements----------");
+            Console.Write("\n");
+            int[] result = Intersect(arr2_1, arr2_2);
+            for (int i = 0; i < result.Length; i++)
+            Console.Write(result[i] + " ");
+
+            Console.Write("\n");
             int[] arr3 = new int[] { 9,9,8,8 };
            Console.Write("----------Question 3 - Largest Unique Number----------");
             Console.Write("\n");
             int LargestNumber = LargestUniqueNumber(arr3);
             Console.Write(LargestNumber);
+
+            Console.Write("\n");
+            int[] arr7 = new int[] { -7, -3, 2, 3, 11 };
+            Console.Write("----------Question 7 - Square of an Array----------");
+            Console.Write("\n");
+            SortedSquares(arr7);
            
         }
 
@@ -74,20 +90,43 @@ namespace Assignment_2
 
         
 
-                
-           
-        public static int LargestUniqueNumber(int[] A)
+        public static int[] Intersect(int[] nums1, int[] nums2)
+        {
+            List<int> result = new List<int>();
+            Dictionary<int, int> myDict = new Dictionary<int, int>();
+            foreach (int count in nums1)
+            {
+                try { myDict.Add(count, 1); }
+                catch { myDict[count]++; }
+            }
+
+            foreach (int count in nums2)
+            {
+                if (myDict.ContainsKey(count) && myDict[count] > 0)
+                {
+                    myDict[count]--;
+                    result.Add(count);
+                }
+            }
+
+            return result.ToArray();
+        }
+    
+
+
+
+    public static int LargestUniqueNumber(int[] A)
         {
             Array.Sort(A);
             Array.Reverse(A);
             int length = A.Length;
-            int i = 0;
+            int i;
 
             for (i = 0; i < length; i++)
             {
                 if (A[i] == A[i + 1])
                 {
-                    i = i+1;
+                    i+=1;
                    
                 }
                 else if(A[i]!=A[i+1])
@@ -97,7 +136,29 @@ namespace Assignment_2
             }
             return -1;
         }
+
+
+        public static int[] SortedSquares(int[] A)
+        {
+            
+            int length = A.Length;
+            int i;
+            for (i = 0; i < length; i++)
+            {
+                A[i] = A[i] * A[i];
+            }
+            Array.Sort(A);
+            for (i = 0; i < length; i++)
+            {
+                Console.Write(" " + A[i]);
+            }
+
+            return A;
+
+        }
+
+    }
     }
 
    
-}
+
